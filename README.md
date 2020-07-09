@@ -15,9 +15,10 @@ To use this code, you can execute the follow commands:
 ```
 cd /home/pi
 sudo bash
+cd
 
 echo Installing all dependencies
-apt-get install git rsync gawk busybox bindfs
+apt-get install busybox bindfs initramfs-tools
 
 echo Disabling swap
 dphys-swapfile swapoff
@@ -26,10 +27,11 @@ update-rc.d dphys-swapfile disable
 systemctl disable dphys-swapfile
 
 echo Cloning repository
-git clone https://github.com/josepsanzcamp/root-ro.git
+wget https://codeload.github.com/hogeika/root-ro/zip/master
+unzip master.zip
 
 echo Doing the setup
-rsync -va root-ro/etc/initramfs-tools/* /etc/initramfs-tools/
+cp -rap root-ro-master/etc/initramfs-tools/* /etc/initramfs-tools/
 mkinitramfs -o /boot/initrd.gz
 echo initramfs initrd.gz >> /boot/config.txt
 
